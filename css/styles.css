@@ -1,0 +1,52 @@
+body {
+    margin: 20px;
+}
+
+.tableauPlaceholder {
+    min-height: 480px;
+}
+
+.black-hat {
+    margin-top: 40px;
+}
+
+#misleading-chart {
+    max-width: 760px;
+    margin-top: 10px;
+}
+
+#misleading-chart svg {
+    width: 100%;
+    height: auto;
+}
+
+.axis line {
+    stroke: #ddd;
+}
+
+.axis text,
+.axis-title,
+.value-label,
+.change-label {
+    font-size: 12px;
+}
+
+.area {
+    fill: #b7c8d6;
+    opacity: 0.8;
+}
+
+.line {
+    fill: none;
+    stroke: #24577a;
+    stroke-width: 3;
+}
+
+.value-label {
+    text-anchor: middle;
+}
+
+.change-label {
+    fill: #24577a;
+    font-size: 12px;
+}
