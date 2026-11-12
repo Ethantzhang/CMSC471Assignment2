@@ -71,14 +71,6 @@ d3.csv(csvPath, d3.autoType).then((rows) => {
         .attr("class", "line")
         .attr("d", line);
 
-    svg.selectAll(".value-label")
-        .data(selected.filter((d) => d.year === 2015 || d.year === 2024))
-        .join("text")
-        .attr("class", "value-label")
-        .attr("x", (d) => x(d.year))
-        .attr("y", (d) => y(d.value) - 10)
-        .text((d) => `${d.value.toFixed(0)}`);
-
     svg.append("text")
         .attr("class", "change-label")
         .attr("x", chartWidth - chartMargin.right)
