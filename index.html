@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment 2</title>
+    <title>White Hat vs. Black Hat: Greenhouse Gas Emissions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>Assignment 2</h1>
+        <h1>Assignment 2: White Hat vs. Black Hat Views of Greenhouse Gas Emissions</h1>
+        <p class="lead">Brady Bragg, James Crabtree, and Ethan Zhang</p>
         <p>Dataset: Greenhouse Gas Emissions 1990-2018</p>
         <div class='tableauPlaceholder' id='viz1794462827494' style='position: relative'><noscript><a href='#'><img
                         alt='Change In Greenhouse Gas (GHG) Emissions From 2015 to 2022 '
@@ -65,9 +66,8 @@
             larger than their actual values. However, to allow for easier comparison of years within a country, the bars
             are given their own color scale. Finally, the tooltips communicate the exact values of the 2015 to 2022
             change in greenhouse gas emissions per person to allow for more precise reading of the data compared to what
-            the color legend might be able to depict on its own.
-
-            To create the white-hat visualization, the dataset was first opened in a Google Sheets document to perform
+            the color legend might be able to depict on its own.</p>
+        <p>To create the white-hat visualization, the dataset was first opened in a Google Sheets document to perform
             some basic exploration of the dataset (answering questions such as "What do the columns mean?" and "How many
             unique countries are there per year?"). Then, a Tableau workbook was created to design the primary
             visualization in one sheet and the secondary bar charts in another. Dealing with the fact that the dataset
@@ -81,6 +81,75 @@
                 aria-label="OECD greenhouse gas emissions progress index from 2015 to 2024"></div>
             <small>Source: OECD Air Emissions Database: Annual observations (Updated 2024)</small>
         </section>
+        <br>
+        <h4>Black-Hat Write-Up</h4>
+        <p>The black-hat visualization uses the same Greenhouse Gas Emissions Dataset as the white-hat visualization,
+            but it only uses the "OECD" aggregate row, which gives the
+            CO2-equivalent greenhouse gas emissions per person for OECD member countries as a whole from 2015 through
+            2024. The goal of the visualization is to convince readers that OECD countries are making rapid, steady
+            progress on climate change. In reality, OECD emissions per person fell from about 11.9 to 10.3 tonnes,
+            a decline of 13.6%, which is real but far more modest than the chart makes it appear.</p>
+        <p>The first manipulation is in the data transformation. Every value was divided by the 2015 value and
+            multiplied by 100 to create an "emissions index" where 2015 equals 100. Indexing is a common technique,
+            which makes it look trustworthy, but here it hides the original units, so readers never learn how large
+            emissions are or that the values are per person (a per-person decline is not the same as a decline
+            in total emissions, since the population of OECD countries grew over this period). The years 2023 and 2024
+            were also kept, even though the white-hat visualization excluded them because so many countries were
+            missing. In the dataset, the United States, Mexico, and Chile have no figures for either year, Korea is also
+            missing in 2024, and every OECD-wide value is flagged as an estimate. These less reliable years also happen
+            to be the two lowest points on the chart, so including them makes the decline look larger and more recent.</p>
+        <p>The second manipulation is in the marks and encodings. The y-axis runs from 84 to 104 instead of starting at
+            zero, so the 13.6% decline drops the line through about two-thirds of the chart's height, exaggerating the
+            change. To make this harder to notice, the axis extends slightly above 100 so the
+            line does not start at the very top, and the area under the line is shaded down to the bottom of the axis.
+            Shaded areas are usually read as starting at zero, so the shrinking area suggests a large share of emissions
+            has disappeared.</p>
+        <p>The third manipulation is in the titles and labels. The title "OECD Climate Progress" tells readers what to
+            conclude before they look at the data and implies the decline came from deliberate climate policy. The
+            y-axis is labeled only "Emissions Index," never mentioning that the values are per person or estimated. The
+            x-axis only labels every other year, and 2020 is one of the unlabeled years, so readers are not prompted to
+            connect that year's sharp drop to the COVID-19 pandemic, and the 2021 rebound reads as a temporary setback.
+            Each of these choices appears in legitimate charts, which is what makes the visualization subtly misleading:
+            no single part is false, but all together they make a very modest decline look like a dramatic success.
+            AI tools were used in making this visualization, similar to Lab 8.</p>
+        <p><button id="axis-toggle" type="button" class="btn btn-outline-secondary btn-sm">Show the chart with a
+                zero-based y-axis</button></p>
+        <br>
+        <h4>Extra Credit</h4>
+        <p>For extra credit, an interactive axis toggle was added to the black-hat visualization. The button above
+            redraws the chart with an animated transition from its truncated 84 to 104 y-axis to an honest axis that
+            starts at zero, and clicking it again restores the black-hat version. With the zero-based axis, the same data
+            that appears to plunge becomes a small decline, which helps visualize the black-hat technique instead of just reading
+            about it.</p>
+        <br>
+        <h4>Development Process</h4>
+        <p>The work was split among the three team members. James Crabtree created the white-hat visualization in
+            Tableau and wrote its write-up, Ethan Zhang created the black-hat visualization in D3.js, and Brady Bragg
+            wrote the black-hat write-up and references, added the extra credit axis toggle, and polished the webpage. In
+            total, the project took roughly eight people-hours: about three hours for the white-hat visualization, about
+            three hours for the black-hat visualization, and about two hours for the black-hat write-up, extra credit,
+            and webpage polish. For the white-hat visualization, the most time was spent creating the filters and
+            calculated fields needed to handle the year being treated as an attribute instead of a dimension, as
+            described in the white-hat write-up. The black-hat visualization was built starting from the Lab 8 file
+            structure and went through several revisions to make its techniques more subtle, such as removing value
+            labels that would have revealed the true size of the decline. For the black-hat write-up, the most time went
+            into checking the dataset to confirm the numbers used to describe each technique, such as the size of the
+            decline and which countries were missing in 2023 and 2024.</p>
+        <br>
+        <h4>References</h4>
+        <ul>
+            <li>OECD, <a
+                    href="https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&df[id]=DSD_AIR_GHG%40DF_AIR_GHG&df[ag]=OECD.ENV.EPI&dq=.A.GHG._T.KG_CO2E_PS&pd=2015,&to[TIME_PERIOD]=false">Air
+                    Emissions: Greenhouse Gas Emissions Inventories</a> (dataset DSD_AIR_GHG@DF_AIR_GHG), OECD Data
+                Explorer. Measure: total greenhouse gas emissions excluding land use, land-use change, and forestry
+                (LULUCF), in kilograms of CO2-equivalent per person, 2015 through 2024. Accessed November 10, 2026. Used
+                for both visualizations.</li>
+            <li><a href="https://public.tableau.com/">Tableau Public</a>, used to build and host the white-hat
+                dashboard.</li>
+            <li>M. Bostock, <a href="https://d3js.org/">D3.js</a> (version 7), used to build the black-hat chart.</li>
+            <li><a href="https://getbootstrap.com/">Bootstrap</a> (version 5.3.3), used for page layout and styling.</li>
+            <li>CMSC471 Lab 8 starter code </li>
+        </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>

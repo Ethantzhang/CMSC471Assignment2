@@ -43,10 +43,11 @@ d3.csv(csvPath, d3.autoType).then((rows) => {
         .attr("text-anchor", "middle")
         .text("Year");
 
-    svg.append("g")
+    const yAxis = d3.axisLeft(y).ticks(5).tickSize(-(chartWidth - chartMargin.left - chartMargin.right)).tickFormat((d) => `${d}`);
+    const yAxisG = svg.append("g")
         .attr("class", "axis")
         .attr("transform", `translate(${chartMargin.left},0)`)
-        .call(d3.axisLeft(y).ticks(5).tickSize(-(chartWidth - chartMargin.left - chartMargin.right)).tickFormat((d) => `${d}`))
+        .call(yAxis)
         .call((g) => g.select(".domain").remove());
 
     svg.append("text")
@@ -61,15 +62,28 @@ d3.csv(csvPath, d3.autoType).then((rows) => {
         .x((d) => x(d.year))
         .y((d) => y(d.value));
 
-    svg.append("path")
+    const areaD = () => `${line(selected)} L ${x(selected[selected.length - 1].year)} ${y(y.domain()[0])} L ${x(selected[0].year)} ${y(y.domain()[0])} Z`;
+    const areaPath = svg.append("path")
         .datum(selected)
         .attr("class", "area")
-        .attr("d", `${line(selected)} L ${x(selected[selected.length - 1].year)} ${y(84)} L ${x(selected[0].year)} ${y(84)} Z`);
+        .attr("d", areaD);
 
-    svg.append("path")
+    const linePath = svg.append("path")
         .datum(selected)
         .attr("class", "line")
         .attr("d", line);
+
+    // Extra credit: toggle between the truncated black-hat y-axis and an honest zero-based one
+    d3.select("#axis-toggle").on("click", function () {
+        const truncated = y.domain()[0] !== 0;
+        y.domain(truncated ? [0, 104] : [84, 104]);
+        d3.select(this).text(truncated ? "Restore the black-hat y-axis (84 to 104)" : "Show the chart with a zero-based y-axis");
+        const t = svg.transition().duration(1000);
+        yAxisG.transition(t).call(yAxis);
+        linePath.transition(t).attr("d", line);
+        areaPath.transition(t).attr("d", areaD);
+        container.node().scrollIntoView({ behavior: "smooth", block: "center" });
+    });
 
     svg.append("text")
         .attr("class", "change-label")

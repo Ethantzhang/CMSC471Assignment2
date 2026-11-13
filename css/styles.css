@@ -24,6 +24,10 @@ body {
     stroke: #ddd;
 }
 
+.axis .domain {
+    display: none;
+}
+
 .axis text,
 .axis-title,
 .value-label,
