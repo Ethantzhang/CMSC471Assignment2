@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,77 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Assignment 2</h1>
         <p>Dataset: Greenhouse Gas Emissions 1990-2018</p>
-        <div class='tableauPlaceholder' id='viz1794462827494' style='position: relative'><noscript><a href='#'><img alt='Change In Greenhouse Gas (GHG) Emissions From 2015 to 2022 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;wo&#47;workbook_extract&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='workbook_extract&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;wo&#47;workbook_extract&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-GB' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1794462827494');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        <div class='tableauPlaceholder' id='viz1794462827494' style='position: relative'><noscript><a href='#'><img
+                        alt='Change In Greenhouse Gas (GHG) Emissions From 2015 to 2022 '
+                        src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;wo&#47;workbook_extract&#47;Sheet1&#47;1_rss.png'
+                        style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                <param name='embed_code_version' value='3' />
+                <param name='site_root' value='' />
+                <param name='name' value='workbook_extract&#47;Sheet1' />
+                <param name='tabs' value='no' />
+                <param name='toolbar' value='yes' />
+                <param name='static_image'
+                    value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;wo&#47;workbook_extract&#47;Sheet1&#47;1.png' />
+                <param name='animate_transition' value='yes' />
+                <param name='display_static_image' value='yes' />
+                <param name='display_spinner' value='yes' />
+                <param name='display_overlay' value='yes' />
+                <param name='display_count' value='yes' />
+                <param name='language' value='en-GB' />
+                <param name='filter' value='publish=yes' />
+            </object></div>
+        <script
+            type='text/javascript'>                    var divElement = document.getElementById('viz1794462827494'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        <br>
+        <h4>White-Hat Write-Up</h4>
+        <p>The dataset used is the <a
+                href="https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&df[id]=DSD_AIR_GHG%40DF_AIR_GHG&df[ag]=OECD.ENV.EPI&dq=.A.GHG._T.KG_CO2E_PS&pd=2015,&to[TIME_PERIOD]=false">Greenhouse
+                Gas Emissions Dataset</a>, which includes data on the CO2-equivalent
+            greenhouse gas emissions per person by year for up to 94 countries (depending on the year) spanning from
+            2015 through 2024. Only data from 2015 through 2022 was used in the visualization, as 2023 and 2024 each had
+            data for significantly fewer countries (46-48 as opposed to 84-94 for the earlier years). Including these final two
+            years would have dramatically reduced the scope of the visualization, which could have exacerbated any
+            missing data biases present in the dataset, as it is unknown whether roughly half of the countries from the
+            earlier years are missing at random or not. For full transparency, the end date of 2022 is clearly and
+            prominently communicated in both the title and tooltips of the visualization, which shows how countries'
+            CO2-equivalent emissions per person have changed over time. Some of the countries present in the dataset did
+            not have data available for either 2015 or 2022, so these countries were dropped so that the same time
+            period is used for all countries visualized. (Tableau defaulted to setting such countries change in
+            per-capita GHG emissions to zero, but since that could be misleading, implying that the change was truly
+            zero when the actual change is unknown, the change values for these countries were set to null instead.)
+            Since lower levels of greenhouse gas emissions are generally perceived to be a positive change, the color
+            scale was chosen such that darker greens indicate larger drops in GHG emissions per person, while darker
+            reds indicate larger increases. Importantly, a neutral light tan color appears not exactly in between the
+            minimum and maximum values, but at zero, such that a neutral color corresponds with a neutral change. To
+            further increase transparency and detail, hovering over each country on the main world map visualization
+            opens a bar chart that shows how GHG emissions per person in that country evolved over the entire seven-year
+            period, which adds an extra level of nuance compared to just the end minus start value, allowing users to
+            easily explore country-level patterns throughout the relevant period. For these secondary bar chart
+            visualizations, because GHG emissions is a quantitative, absolute value, the y-axis starts at zero so that
+            the relative sizes of the bars do not mislead readers into thinking that the magnitudes of the changes are
+            larger than their actual values. However, to allow for easier comparison of years within a country, the bars
+            are given their own color scale. Finally, the tooltips communicate the exact values of the 2015 to 2022
+            change in greenhouse gas emissions per person to allow for more precise reading of the data compared to what
+            the color legend might be able to depict on its own.
+
+            To create the white-hat visualization, the dataset was first opened in a Google Sheets document to perform
+            some basic exploration of the dataset (answering questions such as "What do the columns mean?" and "How many
+            unique countries are there per year?"). Then, a Tableau workbook was created to design the primary
+            visualization in one sheet and the secondary bar charts in another. Dealing with the fact that the dataset
+            treated the year as an attribute as opposed to a dimension and creating the appropriate filters and
+            calculated fields to address that concern took the most time. In total, it took one person roughly three
+            hours to complete this visualization. AI tools were not used to create this visualization.</p>
         <section class="black-hat">
             <h2>OECD Climate Progress</h2>
             <p>Annual emissions index · 2015 baseline</p>
-            <div id="misleading-chart" role="img" aria-label="OECD greenhouse gas emissions progress index from 2015 to 2024"></div>
+            <div id="misleading-chart" role="img"
+                aria-label="OECD greenhouse gas emissions progress index from 2015 to 2024"></div>
             <small>Source: OECD Air Emissions Database: Annual observations (Updated 2024)</small>
         </section>
     </div>
@@ -23,4 +86,5 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="js/script.js"></script>
 </body>
+
 </html>
